@@ -19,19 +19,12 @@ const LayoutWrapper = ({ children }: Props) => {
         {/* Header */}
         <header className="flex items-center justify-between py-10">
           {/* Logo and Header Text */}
-          <div className="decoration-transparent decoration-wavy decoration-2 transition duration-300 ease-in-out hover:underline hover:decoration-cyan-500 hover:underline-offset-8">
+          <div className="">
             <Link href="/" aria-label={siteMetadata.headerTitle}>
               <div className="flex items-center justify-between">
                 <div className="mr-3">
-                  <Logo />
+                  <Logo className="fill-current text-primary-600" />
                 </div>
-                {/* {typeof siteMetadata.headerTitle === 'string' ? (
-                  <div className="hidden h-6 text-2xl font-bold text-primary-500 sm:block">
-                    {siteMetadata.headerTitle}
-                  </div>
-                ) : (
-                  siteMetadata.headerTitle
-                )} */}
               </div>
             </Link>
           </div>

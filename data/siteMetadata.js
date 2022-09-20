@@ -8,15 +8,49 @@ const siteMetadata = {
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
   siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
   siteLogo: '/static/images/logo.png',
-  image: '/static/images/avatar.png',
+  image: '/static/images/avatar.jpg',
   socialBanner: '/static/images/twitter-card.png',
-  email: 'address@yoursite.com',
-  github: 'https://github.com',
+  email: 'samuelgladson4@gmail.com',
+  github: 'https://github.com/Gladson-Samuel-S',
   twitter: 'https://twitter.com/Twitter',
   facebook: 'https://facebook.com',
   youtube: 'https://youtube.com',
-  linkedin: 'https://www.linkedin.com',
+  linkedin: 'https://www.linkedin.com/in/gladson-samuel-s/',
   locale: 'en-US',
+  introduction: {
+    header: "Hi, I'm Gladson Samuel",
+    jobTitle: 'Web Developer',
+    content:
+      'Welcome to my blog. This will be my place where I will share my knowledge that I gain along the way tech journey. I try to spend my free time developing side projects',
+    contentList: [
+      {
+        id: 1,
+        text: ' I started my web dev journey in May 2020.',
+      },
+      {
+        id: 2,
+        text: 'Fell in love with the JS ecosystem.',
+      },
+      {
+        id: 3,
+        text: 'Graduated with a B.Tech degree in Computer Science in 2022',
+      },
+      {
+        id: 4,
+        text: 'I hope my blogs help someone!',
+      },
+    ],
+  },
+  Experience: [
+    {
+      company: 'Conevo technologies private limited',
+      logo: '/static/images/company/conevo.png',
+    },
+    {
+      company: 'Cognizant',
+      logo: '/static/images/company/cognizant.png',
+    },
+  ],
   analytics: {
     // If you want to use an analytics provider you have to add it to the
     // content security policy in the `next.config.js` file.

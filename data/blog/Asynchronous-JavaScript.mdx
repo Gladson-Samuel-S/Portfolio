@@ -1,0 +1,285 @@
+---
+title: 'Asynchronous JavaScript'
+date: 2022-09-21T15:32:14Z
+tags: ['javascript', 'fetch', 'async await']
+draft: false
+summary: 'How to fetch data asynchronously using javascript by XMLHttpRequest, callback, fetch, async await...'
+layout: PostSimple
+bibliography: references-data.bib
+---
+
+1.  Start Something now and finish later ( example - getting data from database )
+2.  JavaScript runs single threaded ( JavaScript can run one statement at a time )
+3.  Used in tasks which take some time to finish.
+
+## HTTP Request
+
+We make HTTP request to the api endpoints to communicate with the other server
+
+```javascript
+const request = new XMLHttpRequest()
+
+request.addEventListener('readystatechange', () => {
+  if (request.readyState === 4) {
+    console.log(request.responseText)
+  }
+})
+
+request.open(
+  'GET',
+  '[https://jsonplaceholder.typicode.com/todos](https://jsonplaceholder.typicode.com/todos)'
+)
+
+request.send()
+```
+
+1.  Instantiate a new XMLHttpRequest object
+2.  Prepare the request ( open )
+3.  Send the request ( send )
+4.  There are 5 levels in ready state
+
+- O -> UNSENT ( client has been created open has not been called yet )
+- 1 -> OPENED ( open() has been called )
+- 2 -> HEADERS_RECIEVED ( send() has been called headers and status are available )
+- 3 -> LOADING ( Downloading responseText has partial data )
+- 4 -> DONE operation is complete
+
+Further Reference - [https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState)
+
+## Callback function
+
+When calling a block of asynchronous code using a function we can pass in a callback function
+
+A callback function is a function passed into another function as an argument, which is then invoked inside the outer function to complete some kind of routine or action.
+
+```javascript
+getTodos((err, data) => {
+  console.log('callback function fired')
+
+  if (err) {
+    console.log(err)
+  } else {
+    console.log(data)
+  }
+})
+```
+
+This takes in err and data
+
+```javascript
+if (request.readyState === 4 && request.status === 200) {
+  callback(undefined, request.responseText)
+} else if (request.readyState === 4) {
+  callback('could not fetch data', undefined)
+}
+```
+
+Here we are passing the data and the error by calling the callback function
+
+## Callback HELL
+
+```javascript
+getTodos('todos/gladson.json', (err, data) => {
+  console.log(data)
+
+  getTodos('todos/blake.json', (err, data) => {
+    console.log(data)
+
+    getTodos('todos/resina.json', (err, data) => {
+      console.log(data)
+    })
+  })
+})
+```
+
+Why nest so much callback ?
+
+Inorder to do something maybe we need to wait for something else to be finished first
+
+The above code is not easy to maintain and it gets even more messy if we decide to add some more functions to it
+
+Callback hell can be resolved by
+
+1.  Split functions into smaller functions
+2.  Using Promises
+3.  Using Async/await
+
+## Promises
+
+To use promises we have to return a new promise
+
+```javascript
+const getTodos = (resource) => {
+  return new Promise((resolve, reject) => {
+    const request = new XMLHttpRequest()
+
+    request.addEventListener('readystatechange', () => {
+      if (request.readyState === 4 && request.status === 200) {
+        const data = JSON.parse(request.responseText)
+
+        resolve(data)
+      } else if (request.readyState === 4) {
+        reject('error getting resource')
+      }
+    })
+
+    request.open('GET', resource)
+
+    request.send()
+  })
+}
+```
+
+Promise takes in a function which provides two methods,
+
+1.  Resolve
+2.  Reject
+
+If the network fetch is successful then Resolve will work else Reject
+
+We can access Resolve by calling the function and by using function in a then block
+
+1.  First function provides the resolved data
+2.  Second function provides the error
+
+Or else we can use catch block for the error
+
+```javascript
+getTodos("todos/gladson.json")
+  .then((data) => {
+    console.log("promise resolved", data)
+  })
+  .catch((err) => {
+    console.log("promise rejected", err)
+  })
+
+## Chaining Promises
+
+getTodos("todos/gladson.json")
+  .then((data) => {
+    console.log("promise 1 resolved:", data)
+    return getTodos("todos/blake.json")
+  })
+  .then((data) => {
+    console.log("promise 2 resolved:", data)
+    return getTodos("todos/resina.json")
+  })
+  .then((data) => {
+    console.log("promise 3 resolved:", data)
+  })
+  .catch((err) => {
+    console.log("promise rejected", err)
+  })
+```
+
+To get data from three JSON files one by one,
+
+All we have to do is
+
+Return a promise in the then block, from there we can tackle on the then method to get the data
+
+## Fetch api
+
+we are fetching a JSON file across the network and printing it to the console. The simplest use of fetch() takes one argument — the path to the resource you want to fetch — and returns a promise containing the response (a Response object).
+
+This is just an HTTP response, not the actual JSON. To extract the JSON body content from the response, we use the json() method (defined on the Body mixin, which is implemented by both the Request and Response objects.)
+
+### GET method
+
+//GET method
+
+```javascript
+fetch('todos/gladson.json')
+  .then((response) => {
+    return response.json()
+  })
+
+  .then((data) => {
+    console.log(data)
+  })
+
+  .catch((err) => {
+    console.log('rejected', err)
+  })
+```
+
+1.  Pass in the URL / API endpoint
+    - This will give a pending promise
+2.  In the then block capture the response and use .json() method
+    - This will give a promise
+3.  Get the data / catch the error
+
+### POST method
+
+```javascript
+const todo = {
+  text: 'Code',
+
+  author: 'John',
+}
+
+//POST method
+
+fetch('https://jsonplaceholder.typicode.com/todos', {
+  method: 'POST',
+
+  headers: {
+    'Content-Type': 'application/JSON',
+  },
+
+  body: JSON.stringify(todo),
+})
+  .then((response) => response.json())
+  .then((data) => console.log('success', data))
+  .catch((err) => console.log('Error', err))
+```
+
+Along with the URL / API endpoint we have to add
+
+```javascript
+Method: POST,
+Headers: {
+'Content-Type': 'application/JSON',
+},
+Body: JSON.stringify(data)
+```
+
+### DELETE method
+
+```javascript
+fetch('https://jsonplaceholder.typicode.com/todos/201', {
+  method: 'DELETE',
+
+  headers: {
+    'Content-Type': 'application/JSON',
+  },
+})
+  .then(() => console.log('resourse deleted'))
+  .catch((err) => console.log('error', err))
+```
+
+## Async and Await
+
+A async function always returns a promise
+
+```javascript
+const getTodos = async () => {
+  const response = await fetch('todos/gladson.json')
+
+  if (response.status !== 200) {
+    throw new Error('cannot fetch the data')
+  }
+
+  const data = await response.json()
+
+  return data
+}
+
+getTodos()
+  .then((data) => console.log('resolved', data))
+  .catch((err) => console.log('rejected', err.message))
+```
+
+The promise in the response variable will be stored only when the fetch is complete so we await
+
+Thanks for reading

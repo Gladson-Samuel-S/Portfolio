@@ -34,7 +34,7 @@ module.exports = {
       },
       colors: {
         primary: colors.sky,
-        gray: colors.slate,
+        gray: colors.neutral,
       },
       typography: (theme) => ({
         DEFAULT: {

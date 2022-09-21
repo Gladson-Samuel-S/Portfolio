@@ -1,0 +1,89 @@
+---
+title: 'Throttling and Debouncing in JavaScript'
+date: 2022-09-19T15:32:14Z
+tags: ['javascript', 'Advanced Concepts', 'snippets']
+draft: false
+summary: 'An overview of throttling and debouncing in javascript'
+layout: PostSimple
+bibliography: references-data.bib
+---
+
+# Throttling
+
+1.  At intervals
+2.  Intermediate State
+3.  For Example :- Scrolling a website and want a function to execute after a certain amount of time
+
+### Example for throttling
+
+```javascript
+const initApp = () => {
+  const tbutton = document.querySelector('#tbutton')
+
+  tbutton.addEventListener('click', throttle(clickLog, 2000))
+}
+
+const clickLog = () => console.log('click')
+
+document.addEventListener('DOMContentLoaded', initApp)
+
+const throttle = (fn, delay) => {
+  let lastTime = 0
+
+  console.log('called throttle immediately')
+
+  let id = 0
+
+  return (...args) => {
+    const now = new Date().getTime()
+
+    id++
+
+    if (now - lastTime < delay) return
+
+    lastTime = now
+
+    console.log(`event id: ${id}`)
+
+    fn(...args)
+  }
+}
+```
+
+---
+
+# Debounce
+
+1.  At end of wait time
+2.  final state
+3.  Fire API call after the user completes typing
+
+### Example for Debounce
+
+```javascript
+const initApp = () => {
+  const tbutton = document.querySelector('#tbutton')
+
+  tbutton.addEventListener('click', debounce(clickLog, 2000))
+}
+
+const clickLog = () => console.log('click')
+
+document.addEventListener('DOMContentLoaded', initApp)
+
+const debounce = (fn, delay) => {
+  let id
+
+  console.log(`id at immediate load: ${id}`)
+
+  return (...args) => {
+    console.log(`previous id: ${id}`)
+
+    if (id) clearTimeout(id)
+
+    id = setTimeout(() => {
+      fn(...args)
+    }, delay)
+  }
+}
+```

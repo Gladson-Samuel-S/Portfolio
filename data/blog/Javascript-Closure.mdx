@@ -1,0 +1,90 @@
+---
+title: 'JavaScript Closure'
+date: 2022-09-20T15:32:14Z
+tags: ['javascript', 'snippets']
+draft: false
+summary: 'An overview of closure in javascript'
+layout: PostSimple
+bibliography: references-data.bib
+---
+
+# What is a closure
+
+1.  A closure is a function having access to the parent scope even after the parent function has closed
+2.  A closure is created when we define a function, not when a function is executed.
+
+## Example of normal lexical scope
+
+```javascript
+const add = () => {
+  let counter = 0
+
+  const plus = () => {
+    counter += 1
+
+    console.log(counter)
+  }
+
+  plus()
+}
+
+add() // 1
+
+add() // 1
+```
+
+## Example of Closure
+
+```javascript
+const adder = () => {
+  let counter = 0
+
+  const plus = () => {
+    counter += 1
+
+    console.log(counter)
+  }
+
+  return plus
+}
+
+let result = adder()
+
+result() // 1
+
+result() // 2
+
+result() // 3
+
+result() // 4
+```
+
+## Example of closure with IIFE
+
+IIFE -> Immediately invoked function expression
+
+```javascript
+const credits = ((num) => {
+  let credit = num
+
+  console.log(`initial credit value ${credit}`)
+
+  return () => {
+    credit -= 1
+
+    if (credit > 0) console.log(`Can play games ${credit} credits available`)
+
+    if (credit <= 0) console.log(`No credits available`)
+  }
+})(3)
+
+// initial credit value 3
+
+credits() // Can play games 2 credits available
+
+credits() // Can play games 1 credits available
+
+credits() // No credits available
+
+credits() // No credits available
+```

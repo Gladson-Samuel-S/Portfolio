@@ -2,7 +2,7 @@ const siteMetadata = {
   title: "Gladson's personal blog",
   author: 'Gladson Samuel S',
   headerTitle: 'Gladson Samuel S',
-  description: 'A blog created with Next.js and Tailwind.css',
+  description: 'Sharing my thoughts with you lot :)',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
@@ -16,12 +16,13 @@ const siteMetadata = {
   facebook: 'https://facebook.com',
   youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com/in/gladson-samuel-s/',
+  resume: '/static/resume/Resume.pdf',
   locale: 'en-US',
   introduction: {
     header: "Hi, I'm Gladson Samuel",
     jobTitle: 'Web Developer',
     content:
-      'Welcome to my blog. This will be my place where I will share my knowledge that I gain along the way tech journey. I try to spend my free time developing side projects',
+      'Welcome to my blog. This will be my place where I will share my knowledge that I gain along the way in my tech journey. I try to spend my free time developing side projects',
     contentList: [
       {
         id: 1,
@@ -43,12 +44,16 @@ const siteMetadata = {
   },
   Experience: [
     {
-      company: 'Conevo technologies private limited',
-      logo: '/static/images/company/conevo.png',
+      logo: '/static/images/company/conevo.svg',
+      company: 'Conevo Technologies Private Limited',
+      position: 'Web Developer Intern',
+      timeline: '6 months',
     },
     {
+      logo: '/static/images/company/cognizant.svg',
       company: 'Cognizant',
-      logo: '/static/images/company/cognizant.png',
+      position: 'Program Analyst Trainee',
+      timeline: '2022 - Now',
     },
   ],
   analytics: {
@@ -63,7 +68,7 @@ const siteMetadata = {
   newsletter: {
     // supports mailchimp, buttondown, convertkit, klaviyo, revue
     // Please add your .env file and modify it according to your selection
-    provider: 'buttondown',
+    provider: '',
   },
   comment: {
     // If you want to use an analytics provider you have to add it to the

@@ -4,6 +4,7 @@ import Facebook from './facebook.svg'
 import Youtube from './youtube.svg'
 import Linkedin from './linkedin.svg'
 import Twitter from './twitter.svg'
+import Resume from './resume.svg'
 
 // Icons taken from: https://simpleicons.org/
 
@@ -14,6 +15,7 @@ const components = {
   youtube: Youtube,
   linkedin: Linkedin,
   twitter: Twitter,
+  resume: Resume,
 }
 
 const SocialIconCustomized = ({ kind, href, size = 8 }) => {
@@ -32,7 +34,7 @@ const SocialIconCustomized = ({ kind, href, size = 8 }) => {
       <span className="sr-only">{kind}</span>
       <div
         className={`flex flex-wrap items-center justify-center gap-2 rounded-md bg-primary-600 p-2 hover:bg-primary-500 ${
-          kind === 'mail' && 'bg-yellow-600 hover:bg-yellow-500'
+          kind === 'github' && 'bg-yellow-600 hover:bg-yellow-500'
         }`}
       >
         <SocialSvg className={`h-6 w-6  fill-current text-gray-100  dark:text-gray-800`} />

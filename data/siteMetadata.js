@@ -5,8 +5,8 @@ const siteMetadata = {
   description: 'Sharing my thoughts with you lot :)',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteUrl: 'https://gladsonsamuel.vercel.app/',
+  siteRepo: 'https://github.com/Gladson-Samuel-S/Portfolio',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.jpg',
   socialBanner: '/static/images/twitter-card.png',
